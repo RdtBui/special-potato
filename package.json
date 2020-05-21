@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.10.3",
+    "@tensorflow/tfjs": "^1.7.4",
+    "@tensorflow/tfjs-react-native": "^0.2.3",
     "core-util-is": "^1.0.2",
     "expo-camera": "^8.2.0",
     "expo-gl": "^8.2.0",
