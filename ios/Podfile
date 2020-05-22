@@ -79,6 +79,8 @@ target 'FruitApp' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+  pod 'TfliteReactNative', :path => '../node_modules/tflite-react-native'
+
   target 'FruitAppTests' do
     inherit! :complete
     # Pods for testing
