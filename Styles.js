@@ -36,7 +36,8 @@ export default StyleSheet.create({
       justifyContent: 'flex-start',
       flexDirection: "row",
       borderRadius: 0,
-      borderWidth: 0
+      borderWidth: 0,
+      height: 65,
     },
     floatingContainerBtn: {
       flex: 1,
