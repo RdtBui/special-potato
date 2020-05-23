@@ -31,32 +31,33 @@ import SettingsScreen from './SettingsScreen';
 function CameraScreen({navigation}) {
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-start"}}>
+            {/* Top search bar */ }
             <View style={Styles.floatingContainer}>
-            <Button 
-                type="outline" 
-                buttonStyle={Styles.floatingContainerBtn}
-                icon={
-                <Icon reverse name="menu" size={24} />
-                }
-                onPress={() => navigation.toggleDrawer()}
-            />
-            <SearchBar 
-                containerStyle={Styles.searchBar}
-                placeholder="Search"
-                lightTheme={true}
-            />
+                <Button 
+                    type="outline" 
+                    buttonStyle={Styles.floatingContainerBtn}
+                    icon={
+                    <Icon reverse name="menu" size={24} />
+                    }
+                    onPress={() => navigation.toggleDrawer()}
+                />
+                <SearchBar 
+                    containerStyle={Styles.searchBar}
+                    placeholder="Search"
+                    lightTheme={true}
+                />
             </View>
-            <View style={{ flex: 1, direction: 'row', justifyContent: 'flex-end'}}>
 
-            <Button 
-                type="outline"
-                icon={
-                <Icon reverse name="camera-alt" size={48} />
-                }
-                onPress={() => navigation.push('Results')}
-            />
-            </View>
-            
+            {/* Main view */ }
+            <View style={{ flex: 1, direction: 'row', justifyContent: 'flex-end'}}>
+                <Button 
+                    type="outline"
+                    icon={
+                    <Icon reverse name="camera-alt" size={48} />
+                    }
+                    onPress={() => navigation.push('Results')}
+                />
+            </View>        
         </SafeAreaView >
     );
 }
