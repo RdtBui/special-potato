@@ -185,6 +185,10 @@ android {
 
         }
     }
+
+    aaptOptions {
+        noCompress 'tflite'
+    }
 }
 
 dependencies {

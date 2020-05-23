@@ -79,6 +79,8 @@ target 'FruitApp' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'TfliteReactNative', :path => '../node_modules/tflite-react-native'
+
   target 'FruitAppTests' do
     inherit! :complete
     # Pods for testing
