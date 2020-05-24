@@ -26,13 +26,12 @@ function ItemScanner(props) {
       console.log('Model reloaded: ' + model);
     }
   });
-  useEffect(() => {
-    if (uriPath) {
-      console.log(uriPath);
-      classifyImage();
-      //() => console.log('Classified just after uripath defined:' + classified);
-    }
-  }, [uriPath, classified]);
+  // useEffect(() => {
+  //   console.log('wtf??');
+  //   //console.log(uriPath);
+  //   classifyImage(uriPath);
+  //   //() => console.log('Classified just after uripath defined:' + classified);
+  // });
   useEffect(() => {
     if (classified) {
       console.log('recogniaazeeeedddddddd ANDD PROCCESSEDDD');
@@ -65,15 +64,44 @@ function ItemScanner(props) {
       const data = await this.camera.takePictureAsync(options);
       const path = data.uri;
       // const path = data.uri.replace('file:///', 'content://');
-      console.log(data.uri);
-      console.log(path);
-      setUriPath(path);
+      setUriPath({uri: path});
+      console.log('data.uri after take picture and setting uriPath' + data.uri);
+      console.log('const path after take picture and setting uriPath' + path);
+      console.log('wish me luck ' + uriPath);
+
+      tflite.runModelOnImage(
+        {
+          path,
+          imageMean: 128.0,
+          imageStd: 128.0,
+          numResults: 3,
+          threshold: 0.05,
+        },
+        (err, res) => {
+          if (err) {
+            console.log(err);
+          } else {
+            () =>
+              console.log(
+                'tflite: ' +
+                  tflite +
+                  ' and uriPath: ' +
+                  uriPath +
+                  ' res: ' +
+                  res,
+              );
+            setRecognitions(res);
+            console.log('recognitions set: ' + res[1]['label']);
+            //setClassified(true);
+          }
+        },
+      );
     }
   };
-
+  const shenanigans = () => {};
   ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ inspect here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   const classifyImage = () => {
-    console.log('before running model on image: ' + model);
+    console.log('before running model on image: ' + uriPath);
     tflite.runModelOnImage(
       {
         path,
@@ -100,10 +128,7 @@ function ItemScanner(props) {
   const renderr = () => {
     if (uriPath) {
       return (
-        <ImageBackground
-          style={{width: 200, height: 200}}
-          source={{uri: uriPath}}
-        />
+        <ImageBackground style={{width: 200, height: 200}} source={uriPath} />
       );
     }
     return (
