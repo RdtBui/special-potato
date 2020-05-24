@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  ImageBackground,
+} from 'react-native';
 import Tflite from 'tflite-react-native';
 import {RNCamera} from 'react-native-camera';
 
@@ -7,31 +14,30 @@ let tflite = new Tflite();
 
 function ItemScanner(props) {
   const [modelLoaded, setModelLoaded] = useState(false);
+  const [model, setModel] = useState();
   const [recognitions, setRecognitions] = useState([]);
   const [uriPath, setUriPath] = useState();
   const [rendered, setRendered] = useState(false);
-  const [proccessed, setProccessed] = useState(false);
+  const [classified, setClassified] = useState(false);
+  const [path, setPath] = useState('');
 
   useEffect(() => {
     if (modelLoaded) {
-      console.log('MMODEL LOADEDED!!!');
+      console.log('Model reloaded: ' + model);
     }
-  }, [modelLoaded]);
+  });
   useEffect(() => {
     if (uriPath) {
       console.log(uriPath);
+      classifyImage();
+      //() => console.log('Classified just after uripath defined:' + classified);
     }
-  }, [uriPath]);
+  }, [uriPath, classified]);
   useEffect(() => {
-    if (proccessed) {
+    if (classified) {
       console.log('recogniaazeeeedddddddd ANDD PROCCESSEDDD');
     }
-  }, [proccessed]);
-  useEffect(() => {
-    if (recognitions) {
-      console.log('diarrhea' + recognitions);
-    }
-  }, [recognitions]);
+  }, [classified]);
 
   const loadMobileNetModel = () => {
     var modelPath = 'models/mobilenet_v1_1.0_224.tflite';
@@ -45,8 +51,9 @@ function ItemScanner(props) {
         if (err) {
           console.log(err);
         } else {
-          console.log(res);
+          console.log('Model loaded: ' + res);
           setModelLoaded(true);
+          setModel(res);
         }
       },
     );
@@ -56,28 +63,72 @@ function ItemScanner(props) {
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
-      setUriPath(data.uri);
+      const path = data.uri;
+      // const path = data.uri.replace('file:///', 'content://');
+      console.log(data.uri);
+      console.log(path);
+      setUriPath(path);
     }
   };
 
   ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ inspect here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  const proccessImage = () => {
+  const classifyImage = () => {
+    console.log('before running model on image: ' + model);
     tflite.runModelOnImage(
       {
-        uriPath,
+        path,
         imageMean: 128.0,
         imageStd: 128.0,
-        numResults: 6,
+        numResults: 3,
         threshold: 0.05,
       },
       (err, res) => {
         if (err) {
           console.log(err);
         } else {
+          () =>
+            console.log(
+              'tflite: ' + tflite + ' and uriPath: ' + uriPath + ' res: ' + res,
+            );
           setRecognitions(res);
-          setProccessed(true);
+          //setClassified(true);
         }
       },
+    );
+  };
+
+  const renderr = () => {
+    if (uriPath) {
+      return (
+        <ImageBackground
+          style={{width: 200, height: 200}}
+          source={{uri: uriPath}}
+        />
+      );
+    }
+    return (
+      <View style={styles.container}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message:
+              'WE NEED YOUR FRIGGING PERMISSION TO USE YOUR CAMERA CMON MAN',
+            buttonPositive: 'Yes sure why not',
+            buttonNegative: 'Nahh',
+          }}
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={takePicture} style={styles.capture}>
+            <Text style={{fontSize: 14}}>SNAP</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   };
 
@@ -93,35 +144,42 @@ function ItemScanner(props) {
     });
   };
 
-  return (
-    <View style={styles.container}>
-      <RNCamera
-        ref={ref => {
-          this.camera = ref;
-        }}
-        style={styles.preview}
-        type={RNCamera.Constants.Type.back}
-        flashMode={RNCamera.Constants.FlashMode.on}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message:
-            'WE NEED YOUR FRIGGING PERMISSION TO USE YOUR CAMERA CMON MAN',
-          buttonPositive: 'Yes sure why not',
-          buttonNegative: 'Nahh',
-        }}
-      />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={modelLoaded ? takePicture : loadMobileNetModel}
-          style={styles.capture}>
-          <Text style={{fontSize: 14}}>SNAP</Text>
-        </TouchableOpacity>
-        <View style={styles.capture}>
-          <View>{proccessed ? proccessImage : renderResults}</View>
-        </View>
-      </View>
-    </View>
-  );
+  // TODO: Automatically load model at beginning of app and store it in a global variable
+  Alert.alert('chicken noodle soup', 'Say cheese weezz', [
+    {
+      text: 'Gotcha!',
+      onPress: () => loadMobileNetModel(),
+    },
+  ]);
+
+  return renderr();
+  // <View style={styles.container}>
+  //   <RNCamera
+  //     ref={ref => {
+  //       this.camera = ref;
+  //     }}
+  //     style={styles.preview}
+  //     type={RNCamera.Constants.Type.back}
+  //     flashMode={RNCamera.Constants.FlashMode.on}
+  //     androidCameraPermissionOptions={{
+  //       title: 'Permission to use camera',
+  //       message:
+  //         'WE NEED YOUR FRIGGING PERMISSION TO USE YOUR CAMERA CMON MAN',
+  //       buttonPositive: 'Yes sure why not',
+  //       buttonNegative: 'Nahh',
+  //     }}
+  //   />
+  //   <View style={styles.buttonContainer}>
+  //     <TouchableOpacity
+  //       onPress={modelLoaded ? takePicture : null}
+  //       style={styles.capture}>
+  //       <Text style={{fontSize: 14}}>SNAP</Text>
+  //     </TouchableOpacity>
+  //     <View style={styles.capture}>
+  //       <View>{renderResults}</View>
+  //     </View>
+  //   </View>
+  // </View>
 }
 
 const styles = StyleSheet.create({
