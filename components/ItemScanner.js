@@ -1,42 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-  ImageBackground,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import Tflite from 'tflite-react-native';
 import {RNCamera} from 'react-native-camera';
+
+// TODO: Release resources by adding tflite.close() somewhere
 
 let tflite = new Tflite();
 
 function ItemScanner(props) {
   const [modelLoaded, setModelLoaded] = useState(false);
-  const [model, setModel] = useState();
   const [recognitions, setRecognitions] = useState([]);
-  const [uriPath, setUriPath] = useState();
-  const [rendered, setRendered] = useState(false);
-  const [classified, setClassified] = useState(false);
-  const [path, setPath] = useState('');
-
-  useEffect(() => {
-    if (modelLoaded) {
-      console.log('Model reloaded: ' + model);
-    }
-  });
-  // useEffect(() => {
-  //   console.log('wtf??');
-  //   //console.log(uriPath);
-  //   classifyImage(uriPath);
-  //   //() => console.log('Classified just after uripath defined:' + classified);
-  // });
-  useEffect(() => {
-    if (classified) {
-      console.log('recogniaazeeeedddddddd ANDD PROCCESSEDDD');
-    }
-  }, [classified]);
+  const [resultsLoaded, setResultsLoaded] = useState(false);
 
   const loadMobileNetModel = () => {
     var modelPath = 'models/mobilenet_v1_1.0_224.tflite';
@@ -50,9 +24,8 @@ function ItemScanner(props) {
         if (err) {
           console.log(err);
         } else {
+          setModelLoaded(res);
           console.log('Model loaded: ' + res);
-          setModelLoaded(true);
-          setModel(res);
         }
       },
     );
@@ -63,155 +36,84 @@ function ItemScanner(props) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
       const path = data.uri;
-      // const path = data.uri.replace('file:///', 'content://');
-      setUriPath({uri: path});
-      console.log('data.uri after take picture and setting uriPath' + data.uri);
-      console.log('const path after take picture and setting uriPath' + path);
-      console.log('wish me luck ' + uriPath);
+      console.log('Image URI path: ' + path);
 
       tflite.runModelOnImage(
         {
           path,
           imageMean: 128.0,
           imageStd: 128.0,
-          numResults: 3,
+          numResults: 6,
           threshold: 0.05,
         },
         (err, res) => {
           if (err) {
             console.log(err);
           } else {
-            () =>
-              console.log(
-                'tflite: ' +
-                  tflite +
-                  ' and uriPath: ' +
-                  uriPath +
-                  ' res: ' +
-                  res,
-              );
             setRecognitions(res);
-            console.log('recognitions set: ' + res[1]['label']);
-            //setClassified(true);
+            setResultsLoaded(true);
+            console.log('Image Classified');
           }
         },
       );
     }
   };
-  const shenanigans = () => {};
-  ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ inspect here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  const classifyImage = () => {
-    console.log('before running model on image: ' + uriPath);
-    tflite.runModelOnImage(
-      {
-        path,
-        imageMean: 128.0,
-        imageStd: 128.0,
-        numResults: 3,
-        threshold: 0.05,
-      },
-      (err, res) => {
-        if (err) {
-          console.log(err);
-        } else {
-          () =>
-            console.log(
-              'tflite: ' + tflite + ' and uriPath: ' + uriPath + ' res: ' + res,
-            );
-          setRecognitions(res);
-          //setClassified(true);
-        }
-      },
-    );
-  };
-
-  const renderr = () => {
-    if (uriPath) {
-      return (
-        <ImageBackground style={{width: 200, height: 200}} source={uriPath} />
-      );
-    }
-    return (
-      <View style={styles.container}>
-        <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.on}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message:
-              'WE NEED YOUR FRIGGING PERMISSION TO USE YOUR CAMERA CMON MAN',
-            buttonPositive: 'Yes sure why not',
-            buttonNegative: 'Nahh',
-          }}
-        />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={takePicture} style={styles.capture}>
-            <Text style={{fontSize: 14}}>SNAP</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
 
   const renderResults = () => {
-    console.log('Rendering raslt');
-    setRendered(true);
-    return recognitions.map((res, id) => {
-      return (
-        <Text key={id}>
-          {res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%'}
-        </Text>
-      );
-    });
+    if (resultsLoaded) {
+      console.log('Rendering raslt');
+      recognitions.map(res => {
+        console.log(
+          res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
+        );
+      });
+    }
   };
 
-  // TODO: Automatically load model at beginning of app and store it in a global variable
-  Alert.alert('chicken noodle soup', 'Say cheese weezz', [
-    {
-      text: 'Gotcha!',
-      onPress: () => loadMobileNetModel(),
-    },
-  ]);
+  const instructionAlert = () => {
+    loadMobileNetModel();
+    // TODO: Automatically load model at beginning of app and store it in a global variable
+    Alert.alert(
+      'chicken noodle soup',
+      'Press Snap first to take a picture, then press Tickle to display results in console',
+      [
+        {
+          text: 'Gotcha!',
+        },
+      ],
+    );
+  };
 
-  return renderr();
-  // <View style={styles.container}>
-  //   <RNCamera
-  //     ref={ref => {
-  //       this.camera = ref;
-  //     }}
-  //     style={styles.preview}
-  //     type={RNCamera.Constants.Type.back}
-  //     flashMode={RNCamera.Constants.FlashMode.on}
-  //     androidCameraPermissionOptions={{
-  //       title: 'Permission to use camera',
-  //       message:
-  //         'WE NEED YOUR FRIGGING PERMISSION TO USE YOUR CAMERA CMON MAN',
-  //       buttonPositive: 'Yes sure why not',
-  //       buttonNegative: 'Nahh',
-  //     }}
-  //   />
-  //   <View style={styles.buttonContainer}>
-  //     <TouchableOpacity
-  //       onPress={modelLoaded ? takePicture : null}
-  //       style={styles.capture}>
-  //       <Text style={{fontSize: 14}}>SNAP</Text>
-  //     </TouchableOpacity>
-  //     <View style={styles.capture}>
-  //       <View>{renderResults}</View>
-  //     </View>
-  //   </View>
-  // </View>
+  return (
+    <View style={styles.container}>
+      <RNCamera
+        ref={ref => {
+          this.camera = ref;
+        }}
+        style={styles.preview}
+        type={RNCamera.Constants.Type.back}
+        flashMode={RNCamera.Constants.FlashMode.on}
+      />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={modelLoaded ? takePicture : instructionAlert}
+          style={styles.capture}>
+          <Text style={{fontSize: 14}}>Cheese</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={renderResults} style={styles.capture}>
+          <Text style={{fontSize: 14}}>Shawarma</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 0,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    alignContent: 'space-between',
     backgroundColor: 'pink',
   },
   container: {
@@ -228,10 +130,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
+    paddingHorizontal: 15,
+    margin: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 export default ItemScanner;
