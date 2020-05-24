@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
+import {RNCamera} from 'react-native-camera';
 
 let tflite = new Tflite();
 
@@ -23,6 +24,7 @@ class ItemScanner extends React.Component {
     this.state = {
       model: null,
       source: null,
+      path: null,
       imageHeight: height,
       imageWidth: width,
       recognitions: [],
@@ -98,6 +100,16 @@ class ItemScanner extends React.Component {
     });
   }
 
+  takePicture = async () => {
+    try {
+      const data = await this.camera.takePictureAsync();
+      this.setState({path: data.uri});
+      console.log('Path to image: ' + data.uri);
+    } catch (err) {
+      console.log('err: ', err);
+    }
+  };
+
   renderResults() {
     const {model, recognitions, imageHeight, imageWidth} = this.state;
 
@@ -122,32 +134,75 @@ class ItemScanner extends React.Component {
       );
     };
     return (
-      <View style={styles.container}>
-        {model ? (
-          <View>
-            {source ? (
-              <Image
-                source={source}
-                style={{
-                  height: imageHeight,
-                  width: imageWidth,
-                }}
-                resizeMode="contain"
-              />
-            ) : (
-              this.openCamera(this)
-            )}
-            <View style={styles.boxes}>{this.renderResults()}</View>
-          </View>
-        ) : (
-          <View>{renderButton('Tickle Me Heaehahehah')}</View>
-        )}
+      <View style={styles.cunt}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+        />
+        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
+          <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style={styles.capture}>
+            <Text style={{fontSize: 14}}> SNAP </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
+      // <View style={styles.container}>
+      //   {model ? (
+      //     <View>
+      //       {source ? (
+      //         <Image
+      //           source={source}
+      //           style={{
+      //             height: imageHeight,
+      //             width: imageWidth,
+      //           }}
+      //           resizeMode="contain"
+      //         />
+      //       ) : (
+      //         this.openCamera(this)
+      //       )}
+      //       <View style={styles.boxes}>{this.renderResults()}</View>
+      //     </View>
+      //   ) : (
+      //     <View>{renderButton('Tickle Me Heaehahehah')}</View>
+      //   )}
+      // </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  cunt: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
