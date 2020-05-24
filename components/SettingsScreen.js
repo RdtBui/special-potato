@@ -16,16 +16,13 @@ import {
    Text,
 } 
 from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
 
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../Styles'
 import { ScrollView } from 'react-native-gesture-handler';
 
-function SettingsScreen() {
-    const navigation = useNavigation();
-
+function SettingsScreen({navigation}) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -38,7 +35,7 @@ function SettingsScreen() {
                     icon={
                     <Icon reverse name="arrow-back" size={24} />
                     }
-                    onPress={() => navigation.goBack()}
+                    onPress={() => navigation.navigate('Home')}
                 />
                 <Text h4 style={{ textAlignVertical: "center"}}>Settings</Text>
             </View>

@@ -15,7 +15,6 @@ import {
    Tile,
 } 
 from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
 
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -31,9 +30,7 @@ const results = [
     {key: 'Strawberry', n: 0, image: "https://hips.hearstapps.com/clv.h-cdn.co/assets/15/22/1432664914-strawberry-facts1.jpg"},
 ]
 
-function ResultsScreen() {
-    const navigation = useNavigation();
-
+function ResultsScreen({navigation}) {
     return (
       <SafeAreaView  style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
         {/* Top search bar */ }
@@ -65,6 +62,7 @@ function ResultsScreen() {
                         titleStyle={Styles.resultsItemText}
                         imageContainerStyle={Styles.resultsItemImg}
                         imageSrc={{uri: item.image}}
+                        onPress={() => navigation.navigate('Details', {name: item.key, uri: item.image})}
                     />
                 }
             />

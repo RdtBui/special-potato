@@ -14,14 +14,12 @@ import {
    Text,
 } 
 from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../Styles'
 
-function AboutScreen() {
-        const navigation = useNavigation();
+function AboutScreen({navigation}) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: "flex-start"}}>
                 <View style={Styles.floatingContainer}>
@@ -31,7 +29,7 @@ function AboutScreen() {
                         icon={
                         <Icon reverse name="arrow-back" size={24} />
                         }
-                        onPress={() => navigation.goBack()}
+                        onPress={() => navigation.navigate('Home')}
                     />
                     <Text h4 style={{ textAlignVertical: "center"}}>About</Text>
                 </View>
