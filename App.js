@@ -14,6 +14,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 // Import components
 import HomeScreen from './components/HomeScreen';
 import ResultsScreen from './components/ResultsScreen';
+import DetailedScreen from './components/DetailedScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ function App() {
           screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Results" component={ResultsScreen} />
+          <Stack.Screen name="Details" component={DetailedScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>

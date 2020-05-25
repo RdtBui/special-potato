@@ -5,6 +5,25 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 export default StyleSheet.create({
+    // Results Page
+    resultsContainer: {
+        flex: 1,
+        paddingBottom: 10
+    },
+    resultsItem: {
+        padding: 10,
+        height: 200,
+    },
+    resultsItemImg: {
+        height: 190,
+    },
+    resultsItemText: {
+        textShadowColor: "#101010",
+        textShadowRadius: 20,
+        fontSize: 36,
+        fontWeight: "bold",
+    },
+    // Search bar
     searchBar: {
       flex: 1,
       backgroundColor: Colors.lighter,
@@ -17,7 +36,8 @@ export default StyleSheet.create({
       justifyContent: 'flex-start',
       flexDirection: "row",
       borderRadius: 0,
-      borderWidth: 0
+      borderWidth: 0,
+      height: 65,
     },
     floatingContainerBtn: {
       flex: 1,
@@ -30,6 +50,7 @@ export default StyleSheet.create({
       overflow: "hidden",
       borderWidth: 0
     },
+    // Other
     scrollView: {
       backgroundColor: Colors.lighter,
     },
