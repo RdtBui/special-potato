@@ -1,9 +1,17 @@
-import React, {useState, useEffect} from 'react';
+// Basic react packages
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+
+// React Native Library to retrieve TensorFlow Lite API
 import Tflite from 'tflite-react-native';
+
+// Camera Package
 import {RNCamera} from 'react-native-camera';
 
 // TODO: Release resources by adding tflite.close() somewhere
+// TODO: Might need to configure for iOS for the dependencies and packages
+// TODO: Find a more practical way to load the model (currently inside function that loads the model)
+// TOOD: Export the embedded style component to the external style sheet
 
 let tflite = new Tflite();
 
@@ -31,6 +39,7 @@ function ItemScanner(props) {
     );
   };
 
+  // Takes a camera shot and proccesses the image to return the classification of the image
   const takePicture = async () => {
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
@@ -50,6 +59,14 @@ function ItemScanner(props) {
           if (err) {
             console.log(err);
           } else {
+            /* The results returned into recognitions are arrays containing dictionaries.
+               Output Format:
+               {
+                 index:0,
+                 label: "crispy chicken",
+                 confidence: 0.666
+               }
+            */
             setRecognitions(res);
             setResultsLoaded(true);
             console.log('Image Classified');
@@ -61,7 +78,6 @@ function ItemScanner(props) {
 
   const renderResults = () => {
     if (resultsLoaded) {
-      console.log('Rendering raslt');
       recognitions.map(res => {
         console.log(
           res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
@@ -72,10 +88,9 @@ function ItemScanner(props) {
 
   const instructionAlert = () => {
     loadMobileNetModel();
-    // TODO: Automatically load model at beginning of app and store it in a global variable
     Alert.alert(
       'chicken noodle soup',
-      'Press Snap first to take a picture, then press Tickle to display results in console',
+      'Press Cheese first to take a picture, then press Shawarma. The results should display in the console in debug mode.',
       [
         {
           text: 'Gotcha!',
