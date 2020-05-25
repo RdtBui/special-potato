@@ -21,8 +21,8 @@ function ItemScanner(props) {
   const [resultsLoaded, setResultsLoaded] = useState(false);
 
   const loadMobileNetModel = () => {
-    var modelPath = 'models/mobilenet_v1_1.0_224.tflite';
-    var labelsPath = 'models/mobilenet_v1_1.0_224.txt';
+    const modelPath = 'models/mobilenet_v1_1.0_224.tflite';
+    const labelsPath = 'models/mobilenet_v1_1.0_224.txt';
     tflite.loadModel(
       {
         model: modelPath,
