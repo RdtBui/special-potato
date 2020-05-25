@@ -4,57 +4,47 @@
 
 // Basic react packages
 import React from 'react';
-import { useState } from 'react';
-import {
-  SafeAreaView,
-  Switch,
-  View,
-} from 'react-native';
-import {
-   Button,
-   Card,
-   Text,
-} 
-from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
+import {useState} from 'react';
+import {SafeAreaView, Switch, View} from 'react-native';
+import {Button, Card, Text} from 'react-native-elements';
 
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Styles from '../Styles'
-import { ScrollView } from 'react-native-gesture-handler';
+import Styles from '../Styles';
+import {ScrollView} from 'react-native-gesture-handler';
 
-function SettingsScreen() {
-    const navigation = useNavigation();
+function SettingsScreen({navigation}) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    return (
-        <SafeAreaView style={{ flex: 1, justifyContent: "flex-start"}}>
-            <View style={Styles.floatingContainer}>
-                <Button 
-                    type="outline" 
-                    buttonStyle={Styles.floatingContainerBtn}
-                    icon={
-                    <Icon reverse name="arrow-back" size={24} />
-                    }
-                    onPress={() => navigation.goBack()}
-                />
-                <Text h4 style={{ textAlignVertical: "center"}}>Settings</Text>
-            </View>
-            <Card>
-                <ScrollView>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-                        <Text>Test</Text>
-                        <Switch
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        />
-                    </View>
-                </ScrollView>
-            </Card>            
-        </SafeAreaView>
-    );
+  return (
+    <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
+      <View style={Styles.floatingContainer}>
+        <Button
+          type="outline"
+          buttonStyle={Styles.floatingContainerBtn}
+          icon={<Icon reverse name="arrow-back" size={24} />}
+          onPress={() => navigation.navigate('Home')}
+        />
+        <Text h4 style={{textAlignVertical: 'center'}}>
+          Settings
+        </Text>
+      </View>
+      <Card>
+        <ScrollView>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text>Test</Text>
+            <Switch onValueChange={toggleSwitch} value={isEnabled} />
+          </View>
+        </ScrollView>
+      </Card>
+    </SafeAreaView>
+  );
 }
 
 export default SettingsScreen;
