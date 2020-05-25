@@ -13,26 +13,26 @@ import {RNCamera} from 'react-native-camera';
 // TODO: Find a more practical way to load the model (currently inside function that loads the model)
 // TOOD: Export the embedded style component to the external style sheet
 
-let tflite = new Tflite();
+let hahahahahahahaha = new Tflite();
 
 function ItemScanner(props) {
-  const [modelLoaded, setModelLoaded] = useState(false);
-  const [recognitions, setRecognitions] = useState([]);
-  const [resultsLoaded, setResultsLoaded] = useState(false);
+  const [ha, haha] = useState(false);
+  const [hahaha, hahahaha] = useState([]);
+  const [hahahahahahaha, hahahahahaha] = useState(false);
 
-  const loadMobileNetModel = () => {
-    var modelPath = 'models/mobilenet_v1_1.0_224.tflite';
-    var labelsPath = 'models/mobilenet_v1_1.0_224.txt';
-    tflite.loadModel(
+  const poopoopipicaca = () => {
+    var hahahahaha = 'models/mobilenet_v1_1.0_224.tflite';
+    var hahahahahahahahaha = 'models/mobilenet_v1_1.0_224.txt';
+    hahahahahahahaha.loadModel(
       {
-        model: modelPath,
-        labels: labelsPath,
+        model: hahahahaha,
+        labels: hahahahahahahahaha,
       },
       (err, res) => {
         if (err) {
           console.log(err);
         } else {
-          setModelLoaded(res);
+          haha(res);
           console.log('Model loaded: ' + res);
         }
       },
@@ -40,14 +40,14 @@ function ItemScanner(props) {
   };
 
   // Takes a camera shot and proccesses the image to return the classification of the image
-  const takePicture = async () => {
+  const oink = async () => {
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
       const path = data.uri;
       console.log('Image URI path: ' + path);
 
-      tflite.runModelOnImage(
+      hahahahahahahaha.runModelOnImage(
         {
           path,
           imageMean: 128.0,
@@ -59,7 +59,7 @@ function ItemScanner(props) {
           if (err) {
             console.log(err);
           } else {
-            /* The results returned into recognitions are arrays containing dictionaries.
+            /* The results returned into hahaha are arrays containing dictionaries.
                Output Format:
                {
                  index:0,
@@ -67,8 +67,8 @@ function ItemScanner(props) {
                  confidence: 0.666
                }
             */
-            setRecognitions(res);
-            setResultsLoaded(true);
+            hahahaha(res);
+            hahahahahaha(true);
             console.log('Image Classified');
           }
         },
@@ -76,9 +76,9 @@ function ItemScanner(props) {
     }
   };
 
-  const renderResults = () => {
-    if (resultsLoaded) {
-      recognitions.map(res => {
+  const hahahahahahahahahamooo = () => {
+    if (hahahahahahaha) {
+      hahaha.map(res => {
         console.log(
           res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
         );
@@ -86,8 +86,8 @@ function ItemScanner(props) {
     }
   };
 
-  const instructionAlert = () => {
-    loadMobileNetModel();
+  const pokpok = () => {
+    poopoopipicaca();
     Alert.alert(
       'chicken noodle soup',
       'Press Cheese first to take a picture, then press Shawarma. The results should display in the console in debug mode.',
@@ -110,12 +110,12 @@ function ItemScanner(props) {
         flashMode={RNCamera.Constants.FlashMode.on}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={modelLoaded ? takePicture : instructionAlert}
-          style={styles.capture}>
+        <TouchableOpacity onPress={ha ? oink : pokpok} style={styles.capture}>
           <Text style={{fontSize: 14}}>Cheese</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={renderResults} style={styles.capture}>
+        <TouchableOpacity
+          onPress={hahahahahahahahahamooo}
+          style={styles.capture}>
           <Text style={{fontSize: 14}}>Shawarma</Text>
         </TouchableOpacity>
       </View>
