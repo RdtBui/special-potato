@@ -1,6 +1,10 @@
 // Basic react packages
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Button} from 'react-native-elements';
+
+// Import assets
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // React Native Library to retrieve TensorFlow Lite API
 import Tflite from 'tflite-react-native';
@@ -114,10 +118,12 @@ function ItemScanner(props) {
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={takePicture} style={styles.capture}>
-          <Text style={{fontSize: 14}}>Cheese</Text>
-        </TouchableOpacity>
+      <View style={{flex: 1, direction: 'row', justifyContent: 'flex-end'}}>
+        <Button
+          type="outline"
+          icon={<Icon reverse name="camera-alt" size={48} />}
+          onPress={takePicture}
+        />
       </View>
     </View>
   );
@@ -134,7 +140,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'green',
   },
   preview: {
     flex: 1,

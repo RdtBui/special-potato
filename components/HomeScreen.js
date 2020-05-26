@@ -3,7 +3,7 @@
  */
 
 // Basic react packages
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {SearchBar, Button, Text, Card} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
@@ -30,6 +30,9 @@ function CameraScreen({navigation}) {
     setModelLoading(loadStatus);
   };
 
+  // Create function to get results back in home screen
+  // navigation.push('Results')
+
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
       {/* Model load indicator */}
@@ -52,15 +55,8 @@ function CameraScreen({navigation}) {
           lightTheme={true}
         />
       </View>
-      <ItemScanner />
       {/* Main view */}
-      <View style={{flex: 1, direction: 'row', justifyContent: 'flex-end'}}>
-        <Button
-          type="outline"
-          icon={<Icon reverse name="camera-alt" size={48} />}
-          onPress={() => navigation.push('Results')}
-        />
-      </View>
+      <ItemScanner />
     </SafeAreaView>
   );
 }
