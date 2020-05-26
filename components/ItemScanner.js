@@ -1,5 +1,5 @@
 // Basic react packages
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 
 // React Native Library to retrieve TensorFlow Lite API
@@ -16,9 +16,14 @@ import {RNCamera} from 'react-native-camera';
 let tflite = new Tflite();
 
 function ItemScanner(props) {
-  const [modelLoaded, setModelLoaded] = useState(false);
   const [recognitions, setRecognitions] = useState([]);
   const [resultsLoaded, setResultsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (resultsLoaded) {
+      renderResults();
+    }
+  });
 
   const loadMobileNetModel = () => {
     const modelPath = 'models/mobilenet_v1_1.0_224.tflite';
@@ -32,7 +37,6 @@ function ItemScanner(props) {
         if (err) {
           console.log(err);
         } else {
-          setModelLoaded(res);
           console.log('Model loaded: ' + res);
         }
       },
@@ -41,6 +45,7 @@ function ItemScanner(props) {
 
   // Takes a camera shot and proccesses the image to return the classification of the image
   const takePicture = async () => {
+    await loadMobileNetModel();
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
@@ -86,18 +91,18 @@ function ItemScanner(props) {
     }
   };
 
-  const instructionAlert = () => {
-    loadMobileNetModel();
-    Alert.alert(
-      'chicken noodle soup',
-      'Press Cheese first to take a picture, then press Shawarma. The results should display in the console in debug mode.',
-      [
-        {
-          text: 'Gotcha!',
-        },
-      ],
-    );
-  };
+  // const instructionAlert = () => {
+  //   loadMobileNetModel();
+  //   Alert.alert(
+  //     'chicken noodle soup',
+  //     'Press Cheese first to take a picture, then press Shawarma. The results should display in the console in debug mode.',
+  //     [
+  //       {
+  //         text: 'Gotcha!',
+  //       },
+  //     ],
+  //   );
+  // };
 
   return (
     <View style={styles.container}>
@@ -110,13 +115,8 @@ function ItemScanner(props) {
         flashMode={RNCamera.Constants.FlashMode.on}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={modelLoaded ? takePicture : instructionAlert}
-          style={styles.capture}>
+        <TouchableOpacity onPress={takePicture} style={styles.capture}>
           <Text style={{fontSize: 14}}>Cheese</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={renderResults} style={styles.capture}>
-          <Text style={{fontSize: 14}}>Shawarma</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'space-between',
-    backgroundColor: 'pink',
+    backgroundColor: 'green',
   },
   container: {
     flex: 1,
