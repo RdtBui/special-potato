@@ -31,7 +31,16 @@ function CameraScreen({navigation}) {
   };
 
   // Create function to get results back in home screen
-  // navigation.push('Results')
+  const onReturnResultsHandler = results => {
+    console.log('You returned to HomeScreen: *******************************');
+    results.map(res => {
+      console.log(
+        res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
+      );
+    });
+    console.log('Navigating from HomeScreen to ResultsScreen');
+    navigation.push('Results');
+  };
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
@@ -56,7 +65,7 @@ function CameraScreen({navigation}) {
         />
       </View>
       {/* Main view */}
-      <ItemScanner />
+      <ItemScanner onReturn={onReturnResultsHandler} />
     </SafeAreaView>
   );
 }

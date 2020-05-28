@@ -12,9 +12,6 @@ import Tflite from 'tflite-react-native';
 // Camera Package
 import {RNCamera} from 'react-native-camera';
 
-// TODO: Release resources by adding tflite.close() somewhere
-// TODO: Might need to configure for iOS for the dependencies and packages
-// TODO: Find a more practical way to load the model (currently inside function that loads the model)
 // TOOD: Export the embedded style component to the external style sheet
 
 let tflite = new Tflite();
@@ -26,6 +23,9 @@ function ItemScanner(props) {
   useEffect(() => {
     if (resultsLoaded) {
       renderResults();
+      // Release recources from TFlite before returning results to HomeScreen
+      tflite.close();
+      props.onReturn(recognitions);
     }
   });
 
@@ -49,12 +49,13 @@ function ItemScanner(props) {
 
   // Takes a camera shot and proccesses the image to return the classification of the image
   const takePicture = async () => {
-    await loadMobileNetModel();
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
       const path = data.uri;
       console.log('Image URI path: ' + path);
+
+      await loadMobileNetModel();
 
       tflite.runModelOnImage(
         {
@@ -76,9 +77,9 @@ function ItemScanner(props) {
                  confidence: 0.666
                }
             */
+            console.log('Image Classified');
             setRecognitions(res);
             setResultsLoaded(true);
-            console.log('Image Classified');
           }
         },
       );
@@ -87,6 +88,7 @@ function ItemScanner(props) {
 
   const renderResults = () => {
     if (resultsLoaded) {
+      console.log('Results from ItemScanner: *******************************');
       recognitions.map(res => {
         console.log(
           res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
@@ -94,19 +96,6 @@ function ItemScanner(props) {
       });
     }
   };
-
-  // const instructionAlert = () => {
-  //   loadMobileNetModel();
-  //   Alert.alert(
-  //     'chicken noodle soup',
-  //     'Press Cheese first to take a picture, then press Shawarma. The results should display in the console in debug mode.',
-  //     [
-  //       {
-  //         text: 'Gotcha!',
-  //       },
-  //     ],
-  //   );
-  // };
 
   return (
     <View style={styles.container}>
