@@ -23,7 +23,6 @@ function ItemScanner(props) {
 
   useEffect(() => {
     if (resultsLoaded) {
-      //renderResults();
       // Release recources from TFlite before returning results to HomeScreen
       tflite.close();
       props.onReturn(recognitions);
@@ -84,17 +83,6 @@ function ItemScanner(props) {
           }
         },
       );
-    }
-  };
-
-  const renderResults = () => {
-    if (resultsLoaded) {
-      console.log('Results from ItemScanner: *******************************');
-      recognitions.map(res => {
-        console.log(
-          res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
-        );
-      });
     }
   };
 

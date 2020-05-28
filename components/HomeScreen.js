@@ -20,16 +20,8 @@ import Styles from '../Styles';
 import AboutScreen from './AboutScreen';
 import SettingsScreen from './SettingsScreen';
 import ItemScanner from './ItemScanner';
-import LoadingIndicator from './LoadingIndicator';
 
 function CameraScreen({navigation}) {
-  const [modelLoading, setModelLoading] = useState(false);
-
-  const loadingIndicatorHandler = loadStatus => {
-    console.log('Loading status updated: ' + modelLoading);
-    setModelLoading(loadStatus);
-  };
-
   const returnResultsHandler = results => {
     console.log('You returned to HomeScreen: *******************************');
     // Display returned results from ItemScanner in the console
@@ -45,9 +37,6 @@ function CameraScreen({navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
-      {/* Model load indicator */}
-      <LoadingIndicator loading={modelLoading} />
-
       {/* Top search bar */}
       <View style={Styles.floatingContainer}>
         <Button
@@ -63,10 +52,7 @@ function CameraScreen({navigation}) {
         />
       </View>
       {/* Main view */}
-      <ItemScanner
-        onReturn={returnResultsHandler}
-        onLoading={loadingIndicatorHandler}
-      />
+      <ItemScanner onReturn={returnResultsHandler} />
     </SafeAreaView>
   );
 }
