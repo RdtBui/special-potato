@@ -25,19 +25,20 @@ import LoadingIndicator from './LoadingIndicator';
 function CameraScreen({navigation}) {
   const [modelLoading, setModelLoading] = useState(false);
 
-  const modelLoadingHandler = loadStatus => {
+  const loadingIndicatorHandler = loadStatus => {
     console.log('Loading status updated: ' + modelLoading);
     setModelLoading(loadStatus);
   };
 
-  // Create function to get results back in home screen
-  const onReturnResultsHandler = results => {
+  const returnResultsHandler = results => {
     console.log('You returned to HomeScreen: *******************************');
+    // Display returned results from ItemScanner in the console
     results.map(res => {
       console.log(
         res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
       );
     });
+    // Pushes ResultsScreen on top of screen stack upon receiving results from ItemScanner
     console.log('Navigating from HomeScreen to ResultsScreen');
     navigation.push('Results');
   };
@@ -45,10 +46,7 @@ function CameraScreen({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
       {/* Model load indicator */}
-      <LoadingIndicator
-        loading={modelLoading}
-        onLoading={modelLoadingHandler}
-      />
+      <LoadingIndicator loading={modelLoading} />
 
       {/* Top search bar */}
       <View style={Styles.floatingContainer}>
@@ -65,7 +63,10 @@ function CameraScreen({navigation}) {
         />
       </View>
       {/* Main view */}
-      <ItemScanner onReturn={onReturnResultsHandler} />
+      <ItemScanner
+        onReturn={returnResultsHandler}
+        onLoading={loadingIndicatorHandler}
+      />
     </SafeAreaView>
   );
 }

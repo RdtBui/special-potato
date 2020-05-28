@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 
+ItemScanner;
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -22,7 +23,7 @@ function ItemScanner(props) {
 
   useEffect(() => {
     if (resultsLoaded) {
-      renderResults();
+      //renderResults();
       // Release recources from TFlite before returning results to HomeScreen
       tflite.close();
       props.onReturn(recognitions);
