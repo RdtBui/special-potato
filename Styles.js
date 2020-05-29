@@ -47,6 +47,12 @@ export default StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 0,
   },
+  // Camera
+  cameraView: {
+    flex: 4,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   // Other
   scrollView: {
     backgroundColor: Colors.lighter,

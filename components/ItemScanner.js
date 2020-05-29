@@ -2,8 +2,8 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
+import Styles from '../Styles';
 
-ItemScanner;
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -92,7 +92,7 @@ function ItemScanner(props) {
         ref={ref => {
           this.camera = ref;
         }}
-        style={styles.preview}
+        style={Styles.cameraView}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
       />
@@ -118,11 +118,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
   },
   capture: {
     flex: 1,
