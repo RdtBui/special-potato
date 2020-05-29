@@ -24,17 +24,19 @@ export default StyleSheet.create({
   // Search bar
   searchBar: {
     flex: 1,
-    backgroundColor: Colors.lighter,
+    //backgroundColor: Colors.lighter,
+    backgroundColor: 'green',
     borderWidth: 0,
     borderRadius: 0,
+    borderTopWidth: 0,
     borderBottomWidth: 0,
     paddingLeft: 0,
   },
   floatingContainer: {
+    backgroundColor: 'purple',
     flexDirection: 'row',
     borderRadius: 0,
     borderWidth: 0,
-    height: 65,
   },
   floatingContainerBtn: {
     flex: 1,

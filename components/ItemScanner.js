@@ -96,7 +96,13 @@ function ItemScanner(props) {
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
       />
-      <View style={{flex: 1, direction: 'row', justifyContent: 'flex-end'}}>
+      <View
+        style={{
+          flex: 1,
+          direction: 'row',
+          justifyContent: 'flex-end',
+          backgroundColor: 'orange',
+        }}>
         <Button
           type="outline"
           icon={<Icon reverse name="camera-alt" size={48} />}

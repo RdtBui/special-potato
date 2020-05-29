@@ -37,8 +37,10 @@ function CameraScreen({navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
+      {/* Main view */}
+      <ItemScanner onReturn={returnResultsHandler} />
       {/* Top search bar */}
-      <View style={Styles.floatingContainer}>
+      <View style={{position: 'absolute', ...Styles.floatingContainer}}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
@@ -51,8 +53,6 @@ function CameraScreen({navigation}) {
           lightTheme={true}
         />
       </View>
-      {/* Main view */}
-      <ItemScanner onReturn={returnResultsHandler} />
     </SafeAreaView>
   );
 }
