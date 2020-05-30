@@ -3,9 +3,9 @@
  */
 
 // Basic react packages
-import React, {useState} from 'react';
+import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import {SearchBar, Button, Text, Card} from 'react-native-elements';
+import {Button, Text, Card} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -42,11 +42,12 @@ function CameraScreen({navigation}) {
       <ItemScanner onReturn={returnResultsHandler} />
       {/* Top Header */}
       <View style={{position: 'absolute', ...Styles.floatingContainer}}>
+        {/* Top Header Menu Button */}
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
           onPress={() => navigation.toggleDrawer()}
-          icon={<Icon reverse name="menu" size={24} />}
+          icon={<Icon reverse name="menu" size={40} />}
         />
         {/* Top Header Search Bar*/}
         <SearchBarComponent />

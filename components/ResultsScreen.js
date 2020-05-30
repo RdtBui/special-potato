@@ -63,7 +63,7 @@ function ResultsScreen({navigation}) {
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
           onPress={() => navigation.pop()}
-          icon={<Icon reverse name="arrow-back" size={24} />}
+          icon={<Icon reverse name="arrow-back" size={40} />}
         />
         {/* Top Header Search Bar*/}
         <SearchBarComponent />

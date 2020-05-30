@@ -101,7 +101,6 @@ function ItemScanner(props) {
           flex: 1,
           direction: 'row',
           justifyContent: 'flex-end',
-          backgroundColor: 'orange',
         }}>
         <Button
           type="outline"
