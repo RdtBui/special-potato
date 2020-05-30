@@ -41,6 +41,7 @@ export default StyleSheet.create({
     margin: 5,
   },
   floatingContainer: {
+    justifyContent: 'flex-start',
     backgroundColor: 'purple',
     flexDirection: 'row',
     borderRadius: 0,
