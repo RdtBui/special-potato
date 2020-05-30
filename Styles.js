@@ -22,15 +22,23 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   // Search bar
-  searchBar: {
+  searchBarInput: {
+    backgroundColor: 'white',
+    borderRadius: 25,
+    borderTopWidth: 3,
+    borderBottomWidth: 3,
+    borderRightWidth: 3,
+    borderLeftWidth: 3,
+    borderColor: 'black',
+  },
+  searchBarContainer: {
     flex: 1,
-    //backgroundColor: Colors.lighter,
-    backgroundColor: 'green',
-    borderWidth: 0,
-    borderRadius: 0,
+    // backgroundColor: Colors.lighter,
+    backgroundColor: 'blue',
     borderTopWidth: 0,
     borderBottomWidth: 0,
     paddingLeft: 0,
+    margin: 5,
   },
   floatingContainer: {
     backgroundColor: 'purple',

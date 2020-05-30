@@ -20,6 +20,7 @@ import Styles from '../Styles';
 import AboutScreen from './AboutScreen';
 import SettingsScreen from './SettingsScreen';
 import ItemScanner from './ItemScanner';
+import SearchBarComponent from './SearchBarComponent';
 
 function CameraScreen({navigation}) {
   const returnResultsHandler = results => {
@@ -39,19 +40,16 @@ function CameraScreen({navigation}) {
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
       {/* Main view */}
       <ItemScanner onReturn={returnResultsHandler} />
-      {/* Top search bar */}
+      {/* Top Header */}
       <View style={{position: 'absolute', ...Styles.floatingContainer}}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="menu" size={24} />}
           onPress={() => navigation.toggleDrawer()}
+          icon={<Icon reverse name="menu" size={24} />}
         />
-        <SearchBar
-          containerStyle={Styles.searchBar}
-          placeholder="Search"
-          lightTheme={true}
-        />
+        {/* Top Header Search Bar*/}
+        <SearchBarComponent />
       </View>
     </SafeAreaView>
   );
