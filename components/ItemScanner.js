@@ -1,6 +1,11 @@
 // Basic react packages
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Button} from 'react-native-elements';
+import Styles from '../Styles';
+
+// Import assets
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // React Native Library to retrieve TensorFlow Lite API
 import Tflite from 'tflite-react-native';
@@ -8,17 +13,21 @@ import Tflite from 'tflite-react-native';
 // Camera Package
 import {RNCamera} from 'react-native-camera';
 
-// TODO: Release resources by adding tflite.close() somewhere
-// TODO: Might need to configure for iOS for the dependencies and packages
-// TODO: Find a more practical way to load the model (currently inside function that loads the model)
 // TOOD: Export the embedded style component to the external style sheet
 
 let tflite = new Tflite();
 
 function ItemScanner(props) {
-  const [modelLoaded, setModelLoaded] = useState(false);
   const [recognitions, setRecognitions] = useState([]);
   const [resultsLoaded, setResultsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (resultsLoaded) {
+      // Release recources from TFlite before returning results to HomeScreen
+      tflite.close();
+      props.onReturn(recognitions);
+    }
+  });
 
   const loadMobileNetModel = () => {
     const modelPath = 'models/mobilenet_v1_1.0_224.tflite';
@@ -32,7 +41,6 @@ function ItemScanner(props) {
         if (err) {
           console.log(err);
         } else {
-          setModelLoaded(res);
           console.log('Model loaded: ' + res);
         }
       },
@@ -46,6 +54,8 @@ function ItemScanner(props) {
       const data = await this.camera.takePictureAsync(options);
       const path = data.uri;
       console.log('Image URI path: ' + path);
+
+      await loadMobileNetModel();
 
       tflite.runModelOnImage(
         {
@@ -67,36 +77,13 @@ function ItemScanner(props) {
                  confidence: 0.666
                }
             */
+            console.log('Image Classified');
             setRecognitions(res);
             setResultsLoaded(true);
-            console.log('Image Classified');
           }
         },
       );
     }
-  };
-
-  const renderResults = () => {
-    if (resultsLoaded) {
-      recognitions.map(res => {
-        console.log(
-          res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
-        );
-      });
-    }
-  };
-
-  const instructionAlert = () => {
-    loadMobileNetModel();
-    Alert.alert(
-      'chicken noodle soup',
-      'Press Cheese first to take a picture, then press Shawarma. The results should display in the console in debug mode.',
-      [
-        {
-          text: 'Gotcha!',
-        },
-      ],
-    );
   };
 
   return (
@@ -105,19 +92,21 @@ function ItemScanner(props) {
         ref={ref => {
           this.camera = ref;
         }}
-        style={styles.preview}
+        style={Styles.cameraView}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={modelLoaded ? takePicture : instructionAlert}
-          style={styles.capture}>
-          <Text style={{fontSize: 14}}>Cheese</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={renderResults} style={styles.capture}>
-          <Text style={{fontSize: 14}}>Shawarma</Text>
-        </TouchableOpacity>
+      <View
+        style={{
+          flex: 1,
+          direction: 'row',
+          justifyContent: 'flex-end',
+        }}>
+        <Button
+          type="outline"
+          icon={<Icon reverse name="camera-alt" size={48} />}
+          onPress={takePicture}
+        />
       </View>
     </View>
   );
@@ -129,17 +118,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'space-between',
-    backgroundColor: 'pink',
+    backgroundColor: 'green',
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'green',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
   },
   capture: {
     flex: 1,

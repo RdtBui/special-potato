@@ -21,7 +21,7 @@ function DetailedScreen({route, navigation}) {
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="arrow-back" size={24} />}
+          icon={<Icon reverse name="arrow-back" size={40} />}
           onPress={() => navigation.goBack()}
         />
       </View>

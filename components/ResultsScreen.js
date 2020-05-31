@@ -5,11 +5,14 @@
 // Basic react packages
 import React from 'react';
 import {SafeAreaView, View, FlatList} from 'react-native';
-import {SearchBar, Button, Tile} from 'react-native-elements';
+import {Button, Tile} from 'react-native-elements';
 
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../Styles';
+
+// Import components
+import SearchBarComponent from './SearchBarComponent';
 
 const results = [
   {key: 'Apple', n: 3, image: 'https://www.dw.com/image/47425871_401.jpg'},
@@ -54,21 +57,17 @@ function ResultsScreen({navigation}) {
   return (
     <SafeAreaView
       style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
-      {/* Top search bar */}
+      {/* Top Header */}
       <View style={Styles.floatingContainer}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="arrow-back" size={24} />}
           onPress={() => navigation.pop()}
+          icon={<Icon reverse name="arrow-back" size={40} />}
         />
-        <SearchBar
-          containerStyle={Styles.searchBar}
-          placeholder="Search"
-          lightTheme={true}
-        />
+        {/* Top Header Search Bar*/}
+        <SearchBarComponent />
       </View>
-
       {/* Flatlist of results */}
       <View style={Styles.resultsContainer}>
         <FlatList

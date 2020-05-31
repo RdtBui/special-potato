@@ -5,7 +5,7 @@
 // Basic react packages
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import {SearchBar, Button, Text, Card} from 'react-native-elements';
+import {Button, Text, Card} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -20,32 +20,37 @@ import Styles from '../Styles';
 import AboutScreen from './AboutScreen';
 import SettingsScreen from './SettingsScreen';
 import ItemScanner from './ItemScanner';
+import SearchBarComponent from './SearchBarComponent';
 
 function CameraScreen({navigation}) {
+  const returnResultsHandler = results => {
+    console.log('You returned to HomeScreen: *******************************');
+    // Display returned results from ItemScanner in the console
+    results.map(res => {
+      console.log(
+        res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
+      );
+    });
+    // Pushes ResultsScreen on top of screen stack upon receiving results from ItemScanner
+    console.log('Navigating from HomeScreen to ResultsScreen');
+    navigation.push('Results');
+  };
+
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
-      {/* Top search bar */}
-      <View style={Styles.floatingContainer}>
+      {/* Main view */}
+      <ItemScanner onReturn={returnResultsHandler} />
+      {/* Top Header */}
+      <View style={{position: 'absolute', ...Styles.floatingContainer}}>
+        {/* Top Header Menu Button */}
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="menu" size={24} />}
           onPress={() => navigation.toggleDrawer()}
+          icon={<Icon reverse name="menu" size={40} />}
         />
-        <SearchBar
-          containerStyle={Styles.searchBar}
-          placeholder="Search"
-          lightTheme={true}
-        />
-      </View>
-      <ItemScanner />
-      {/* Main view */}
-      <View style={{flex: 1, direction: 'row', justifyContent: 'flex-end'}}>
-        <Button
-          type="outline"
-          icon={<Icon reverse name="camera-alt" size={48} />}
-          onPress={() => navigation.push('Results')}
-        />
+        {/* Top Header Search Bar*/}
+        <SearchBarComponent />
       </View>
     </SafeAreaView>
   );
