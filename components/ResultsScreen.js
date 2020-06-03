@@ -53,7 +53,17 @@ const results = [
   },
 ];
 
-function ResultsScreen({navigation}) {
+function ResultsScreen({route, navigation}) {
+  const {resultz} = route.params;
+
+  // Displays results in the console from inside ResultsScreen
+  console.log('Results inside ResultScreen:');
+  resultz.map(res => {
+    console.log(
+      res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
+    );
+  });
+
   return (
     <SafeAreaView
       style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>

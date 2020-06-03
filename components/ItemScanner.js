@@ -26,8 +26,9 @@ function ItemScanner(props) {
       // Release recources from TFlite before returning results to HomeScreen
       tflite.close();
       props.onReturn(recognitions);
+      setResultsLoaded(false);
     }
-  });
+  }, [resultsLoaded]);
 
   const loadMobileNetModel = () => {
     const modelPath = 'models/mobilenet_v1_1.0_224.tflite';
@@ -47,6 +48,35 @@ function ItemScanner(props) {
     );
   };
 
+  const classifyImage = path => {
+    tflite.runModelOnImage(
+      {
+        path,
+        imageMean: 128.0,
+        imageStd: 128.0,
+        numResults: 6,
+        threshold: 0.05,
+      },
+      (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          /* The results returned into recognitions are arrays containing dictionaries.
+             Output Format:
+             {
+               index:0,
+               label: "crispy chicken",
+               confidence: 0.666
+             }
+          */
+          console.log('Image Classified');
+          setRecognitions(res);
+          setResultsLoaded(true);
+        }
+      },
+    );
+  };
+
   // Takes a camera shot and proccesses the image to return the classification of the image
   const takePicture = async () => {
     if (this.camera) {
@@ -56,33 +86,7 @@ function ItemScanner(props) {
       console.log('Image URI path: ' + path);
 
       await loadMobileNetModel();
-
-      tflite.runModelOnImage(
-        {
-          path,
-          imageMean: 128.0,
-          imageStd: 128.0,
-          numResults: 6,
-          threshold: 0.05,
-        },
-        (err, res) => {
-          if (err) {
-            console.log(err);
-          } else {
-            /* The results returned into recognitions are arrays containing dictionaries.
-               Output Format:
-               {
-                 index:0,
-                 label: "crispy chicken",
-                 confidence: 0.666
-               }
-            */
-            console.log('Image Classified');
-            setRecognitions(res);
-            setResultsLoaded(true);
-          }
-        },
-      );
+      await classifyImage(path);
     }
   };
 

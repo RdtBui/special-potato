@@ -3,7 +3,7 @@
  */
 
 // Basic react packages
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Text, Card} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
@@ -23,18 +23,19 @@ import ItemScanner from './ItemScanner';
 import SearchBarComponent from './SearchBarComponent';
 
 function CameraScreen({navigation}) {
+  const [resultsReturned, setResultsReturned] = useState([]);
+
   const returnResultsHandler = results => {
-    console.log('You returned to HomeScreen: *******************************');
-    // Display returned results from ItemScanner in the console
-    results.map(res => {
-      console.log(
-        res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
-      );
-    });
-    // Pushes ResultsScreen on top of screen stack upon receiving results from ItemScanner
-    console.log('Navigating from HomeScreen to ResultsScreen');
-    navigation.push('Results');
+    setResultsReturned(results);
   };
+
+  // Once HomeScreen receives the results from ItemScanner, it will hand them to ResultsScreen
+  // useEffect ensures that navigation to ResultsScreen happens only after the results returned from ItemScanner and are defined
+  useEffect(() => {
+    if (resultsReturned !== undefined) {
+      navigation.push('Results', {resultz: resultsReturned});
+    }
+  }, [resultsReturned]);
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
