@@ -48,7 +48,7 @@ function CameraScreen({navigation}) {
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
           onPress={() => navigation.toggleDrawer()}
-          icon={<Icon reverse name="menu" size={40} />}
+          icon={<Icon reverse name="menu" size={30} />}
         />
         {/* Top Header Search Bar*/}
         <SearchBarComponent />

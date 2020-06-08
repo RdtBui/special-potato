@@ -23,7 +23,7 @@ function SettingsScreen({navigation}) {
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="arrow-back" size={36} />}
+          icon={<Icon reverse name="arrow-back" size={30} />}
           onPress={() => navigation.navigate('Home')}
         />
         <Text h4 style={{textAlignVertical: 'center'}}>

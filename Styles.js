@@ -54,13 +54,15 @@ export default StyleSheet.create({
   },
   floatingContainerBtn: {
     flex: 1,
+    backgroundColor: '#ffac81',
     padding: 7,
     margin: 12,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    borderWidth: 0,
-    borderRadius: 25,
+    borderWidth: 3,
+    borderColor: 'black',
+    borderRadius: 20,
     width: 60,
   },
   // Camera

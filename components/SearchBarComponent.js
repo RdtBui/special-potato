@@ -11,7 +11,7 @@ function SearchBarComponent(props) {
     <SearchBar
       searchIcon={{
         size: 30,
-        backgroundColor: '#56C596',
+        backgroundColor: '#cdeac0',
         height: 55,
         width: 55,
         justifyContent: 'center',
