@@ -54,7 +54,7 @@ export default StyleSheet.create({
   },
   floatingContainerBtn: {
     flex: 1,
-    backgroundColor: '#ffac81',
+    backgroundColor: '#cdeac0',
     padding: 7,
     margin: 12,
     justifyContent: 'center',
