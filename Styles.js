@@ -23,6 +23,7 @@ export default StyleSheet.create({
   },
   // Search bar
   searchBarInput: {
+    height: 45,
     backgroundColor: Colors.white,
     borderRadius: 25,
     borderTopWidth: 3,
@@ -40,6 +41,7 @@ export default StyleSheet.create({
     borderBottomWidth: 0,
     paddingLeft: 0,
     margin: 5,
+    justifyContent: 'center',
   },
 
   floatingContainer: {
