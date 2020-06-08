@@ -5,6 +5,7 @@ class Fruit {
     name,
     color,
     imageUrl,
+    description,
     peakSeason,
     pickInstructions,
     eatInstructions,
@@ -14,6 +15,7 @@ class Fruit {
     this.name = name;
     this.color = color;
     this.imageUrl = imageUrl;
+    this.description = description;
     this.peakSeason = peakSeason;
     this.pickInstructions = pickInstructions;
     this.eatInstructions = eatInstructions;
