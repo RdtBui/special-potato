@@ -1,23 +1,21 @@
 class Fruit {
   constructor(
-    id,
-    categoryIds,
     name,
+    id,
     color,
     imageUrl,
     description,
     peakSeason,
-    pickInstructions,
+    selectInstructions,
     eatInstructions,
   ) {
-    this.id = id;
-    this.categoryIds = categoryIds;
     this.name = name;
+    this.id = id;
     this.color = color;
     this.imageUrl = imageUrl;
     this.description = description;
     this.peakSeason = peakSeason;
-    this.pickInstructions = pickInstructions;
+    this.selectInstructions = selectInstructions;
     this.eatInstructions = eatInstructions;
   }
 }

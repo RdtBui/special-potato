@@ -10,6 +10,7 @@ import {Button, Tile} from 'react-native-elements';
 // Import assets
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../Styles';
+import DataMapper from '../data/DataMapper';
 
 // Import components
 import SearchBarComponent from './SearchBarComponent';
@@ -55,6 +56,9 @@ const results = [
 
 function ResultsScreen({route, navigation}) {
   const {resultz} = route.params;
+  let dm = new DataMapper();
+  // TODO: map data retrieved from data mapper to results and display the list
+  // TODO: make list generation as a component so it can be used in results screen as well as favorites
 
   // Displays results in the console from inside ResultsScreen
   console.log('Results inside ResultScreen:');
