@@ -3,7 +3,7 @@
  */
 
 // Basic react packages
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View, FlatList} from 'react-native';
 import {Button, Tile} from 'react-native-elements';
 
@@ -56,10 +56,10 @@ const results = [
 
 function ResultsScreen({route, navigation}) {
   const {resultz} = route.params;
+  const [resultLabels, setResultLabels] = useState([]);
   let dm = new DataMapper();
   // TODO: map data retrieved from data mapper to results and display the list
   // TODO: make list generation as a component so it can be used in results screen as well as favorites
-
   // Displays results in the console from inside ResultsScreen
   console.log('Results inside ResultScreen:');
   resultz.map(res => {
@@ -67,6 +67,19 @@ function ResultsScreen({route, navigation}) {
       res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
     );
   });
+
+  // Extracts the labels from results coming from HomeScreen and placing them in an array
+  // for querying the database with the label name
+  const resultsToNameArray = () => {
+    resultz.forEach(res => {
+      setResultLabels([...resultLabels, res['label']]);
+    });
+  };
+
+  const fetchDataResults = async () => {
+    var fruit = await dm.getFruit('apple');
+    console.log('fantatis baby: ' + fruit.name);
+  };
 
   return (
     <SafeAreaView
