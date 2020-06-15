@@ -99,43 +99,23 @@ function ItemScanner(props) {
         style={Styles.cameraView}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
-      />
-      <View
-        style={{
-          flex: 1,
-          direction: 'row',
-          justifyContent: 'flex-end',
-        }}>
+        captureAudio={false}
+      >
         <Button
           type="outline"
           icon={<Icon reverse name="camera-alt" size={48} />}
           onPress={takePicture}
+          buttonStyle={Styles.captureButton}
         />
-      </View>
+      </RNCamera>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'space-between',
-    backgroundColor: 'green',
-  },
   container: {
     flex: 1,
     flexDirection: 'column',
-  },
-  capture: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    paddingHorizontal: 15,
-    margin: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 export default ItemScanner;
