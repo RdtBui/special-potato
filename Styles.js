@@ -65,7 +65,16 @@ export default StyleSheet.create({
   cameraView: {
     flex: 4,
     justifyContent: 'flex-end',
+    paddingBottom: 20,
     alignItems: 'center',
+  },
+  captureButton: {
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    width: 80,
   },
   // Other
   scrollView: {
