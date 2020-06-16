@@ -39,7 +39,7 @@ export default StyleSheet.create({
     borderTopWidth: 0,
     borderBottomWidth: 0,
     paddingLeft: 0,
-    margin: 5,
+    margin: 0,
   },
 
   floatingContainer: {
@@ -51,15 +51,13 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   floatingContainerBtn: {
-    flex: 1,
-    padding: 7,
+    width: 60,
+    height: 50,
     margin: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
     borderWidth: 0,
     borderRadius: 25,
-    width: 60,
   },
   // Camera
   cameraView: {
