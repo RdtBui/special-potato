@@ -19,7 +19,7 @@ function SettingsScreen({navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
-      <View style={Styles.floatingContainer}>
+      <View style={Styles.headerFloatingContainer}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}

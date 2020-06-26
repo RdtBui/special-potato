@@ -40,36 +40,41 @@ export default StyleSheet.create({
     borderTopWidth: 0,
     borderBottomWidth: 0,
     paddingLeft: 0,
-    margin: 5,
-    justifyContent: 'center',
+    margin: 0,
   },
 
-  floatingContainer: {
+  headerFloatingContainer: {
     justifyContent: 'flex-start',
-    backgroundColor: 'transparent',
+    alignItems: 'center',
+
     flexDirection: 'row',
     borderRadius: 0,
     borderWidth: 0,
     marginTop: 10,
   },
+
   floatingContainerBtn: {
-    flex: 1,
-    backgroundColor: '#cdeac0',
-    padding: 7,
+    width: 60,
+    height: 45,
     margin: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
-    borderWidth: 3,
-    borderColor: 'black',
-    borderRadius: 20,
-    width: 60,
+    borderWidth: 0,
   },
   // Camera
   cameraView: {
     flex: 4,
     justifyContent: 'flex-end',
+    paddingBottom: 20,
     alignItems: 'center',
+  },
+  captureButton: {
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    width: 80,
   },
   // Other
   scrollView: {

@@ -85,7 +85,7 @@ function ResultsScreen({route, navigation}) {
     <SafeAreaView
       style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
       {/* Top Header */}
-      <View style={Styles.floatingContainer}>
+      <View style={Styles.headerFloatingContainer}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}

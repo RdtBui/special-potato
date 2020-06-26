@@ -42,11 +42,21 @@ function CameraScreen({navigation}) {
       {/* Main view */}
       <ItemScanner onReturn={returnResultsHandler} />
       {/* Top Header */}
-      <View style={{position: 'absolute', ...Styles.floatingContainer}}>
+      <View
+        style={{
+          position: 'absolute',
+          ...Styles.headerFloatingContainer,
+        }}>
         {/* Top Header Menu Button */}
         <Button
           type="outline"
-          buttonStyle={Styles.floatingContainerBtn}
+          buttonStyle={{
+            ...Styles.floatingContainerBtn,
+            borderWidth: 3,
+            borderColor: 'black',
+            borderRadius: 20,
+            backgroundColor: '#cdeac0',
+          }}
           onPress={() => navigation.toggleDrawer()}
           icon={<Icon reverse name="menu" size={30} />}
         />
