@@ -1,6 +1,6 @@
 class Fruit {
   constructor(
-    name,
+    title,
     id,
     color,
     imageUrl,
@@ -9,7 +9,7 @@ class Fruit {
     selectInstructions,
     eatInstructions,
   ) {
-    this.name = name;
+    this.title = title;
     this.id = id;
     this.color = color;
     this.imageUrl = imageUrl;

@@ -4,15 +4,14 @@ import database from '@react-native-firebase/database';
 
 class DataMapper {
   // Getter
-  async getFruit(resultQuery) {
+  async getFruit(queryLabel) {
     var fruit;
     await database()
-      .ref('/fruits/' + resultQuery)
+      .ref('/fruits/' + queryLabel)
       .once('value')
       .then(snapshot => {
-        console.log('User Data: ', snapshot.val());
         var data = snapshot.val();
-        var name = resultQuery;
+        var title = data.title;
         var id = data.id;
         var color = data.color;
         var imageUrl = data.imageUrl;
@@ -21,7 +20,7 @@ class DataMapper {
         var selectInstructions = data.selectInstructions;
         var eatInstructions = data.eatInstructions;
         fruit = new Fruit(
-          name,
+          title,
           id,
           color,
           imageUrl,

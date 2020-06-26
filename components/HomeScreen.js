@@ -6,8 +6,6 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Text, Card} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
-import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
@@ -34,7 +32,8 @@ function CameraScreen({navigation}) {
   useEffect(() => {
     if (resultsReturned !== undefined) {
       navigation.push('Results', {
-        resultz: resultsReturned.map(res => res['label']),
+        // Sends only a simple array of the resulting labels to ResultsScreen
+        labels: resultsReturned.map(res => res['label']),
       });
     }
   }, [resultsReturned]);

@@ -3,7 +3,7 @@
  */
 
 // Basic react packages
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {SafeAreaView, View, FlatList} from 'react-native';
 import {Button, Tile} from 'react-native-elements';
 
@@ -55,26 +55,32 @@ const results = [
 ];
 
 function ResultsScreen({route, navigation}) {
-  const {resultz} = route.params;
+  const {labels} = route.params;
   const [resultLabels, setResultLabels] = useState([]);
   let dm = new DataMapper();
-  // TODO: map data retrieved from data mapper to results and display the list
-  // TODO: make list generation as a component so it can be used in results screen as well as favorites
   // Displays results in the console from inside ResultsScreen
   console.log('Results inside ResultScreen:');
-  resultz.forEach(res => console.log(res));
+  labels.forEach(res => console.log(res));
 
-  // Extracts the labels from results coming from HomeScreen and placing them in an array
-  // for querying the database with the label name
-  const resultsToNameArray = () => {
-    resultz.forEach(res => {
-      setResultLabels([...resultLabels, res['label']]);
-    });
-  };
+  // When the results are received in ResultsScreen, the DataMapper will fetch the fruit informations from Firebase
+  useEffect(() => {
+    if (labels != undefined) {
+      labels.forEach(fruit => fetchDataResults(fruit));
+    }
+  }, [labels]);
 
-  const fetchDataResults = async () => {
-    var fruit = await dm.getFruit('apple');
-    console.log('fantatis baby: ' + fruit.name);
+  // Gets the data
+  const fetchDataResults = async queryLabel => {
+    // TODO: Replace hardcoded 'banana' with queryLabel and remove console logs once model is trained to recognize fruits
+    // TODO: Make sure data is loaded completely before displaying FlatList
+    let fruit = await dm.getFruit('banana');
+    console.log('Querying for: ' + queryLabel);
+    console.log('Output:');
+    console.log('Fruit is ' + fruit.title);
+    console.log('Color is ' + fruit.color);
+    console.log('Description: ' + fruit.description);
+    console.log('Peak seasons is/are ' + fruit.peakSeason);
+    console.log('How to eat the fruit ' + fruit.eatInstructions);
   };
 
   return (
