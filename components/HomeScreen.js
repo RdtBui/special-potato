@@ -33,7 +33,9 @@ function CameraScreen({navigation}) {
   // useEffect ensures that navigation to ResultsScreen happens only after the results returned from ItemScanner and are defined
   useEffect(() => {
     if (resultsReturned !== undefined) {
-      navigation.push('Results', {resultz: resultsReturned});
+      navigation.push('Results', {
+        resultz: resultsReturned.map(res => res['label']),
+      });
     }
   }, [resultsReturned]);
 

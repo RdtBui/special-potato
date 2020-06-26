@@ -62,11 +62,7 @@ function ResultsScreen({route, navigation}) {
   // TODO: make list generation as a component so it can be used in results screen as well as favorites
   // Displays results in the console from inside ResultsScreen
   console.log('Results inside ResultScreen:');
-  resultz.map(res => {
-    console.log(
-      res['label'] + '-' + (res['confidence'] * 100).toFixed(0) + '%',
-    );
-  });
+  resultz.forEach(res => console.log(res));
 
   // Extracts the labels from results coming from HomeScreen and placing them in an array
   // for querying the database with the label name
