@@ -56,7 +56,8 @@ const results = [
 
 function ResultsScreen({route, navigation}) {
   const {labels} = route.params;
-  const [resultLabels, setResultLabels] = useState([]);
+  // TODO: Change resultz to results once the dummy results is removed
+  const [resultz, setResultz] = useState([]);
   let dm = new DataMapper();
   // Displays results in the console from inside ResultsScreen
   console.log('Results inside ResultScreen:');
@@ -78,6 +79,7 @@ function ResultsScreen({route, navigation}) {
     console.log('Output:');
     console.log('Fruit is ' + fruit.title);
     console.log('Color is ' + fruit.color);
+    console.log('URL is ' + fruit.imageUrl);
     console.log('Description: ' + fruit.description);
     console.log('Peak seasons is/are ' + fruit.peakSeason);
     console.log('How to eat the fruit ' + fruit.eatInstructions);

@@ -17,8 +17,10 @@ import Styles from '../Styles';
 // Import components
 import AboutScreen from './AboutScreen';
 import SettingsScreen from './SettingsScreen';
-import ItemScanner from './ItemScanner';
 import SearchBarComponent from './SearchBarComponent';
+import FavoriteScreen from './FavoriteScreen';
+
+import ItemScanner from './ItemScanner';
 
 function CameraScreen({navigation}) {
   const [resultsReturned, setResultsReturned] = useState([]);
@@ -72,8 +74,9 @@ function HomeScreen() {
   return (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={CameraScreen} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
+      <Drawer.Screen name="Favorites" component={FavoriteScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 }
