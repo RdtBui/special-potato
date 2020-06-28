@@ -78,11 +78,7 @@ function ResultsScreen({route, navigation}) {
     console.log('Querying for: ' + queryLabel);
     console.log('Output:');
     console.log('Fruit is ' + fruit.title);
-    console.log('Color is ' + fruit.color);
-    console.log('URL is ' + fruit.imageUrl);
-    console.log('Description: ' + fruit.description);
-    console.log('Peak seasons is/are ' + fruit.peakSeason);
-    console.log('How to eat the fruit ' + fruit.eatInstructions);
+    resultz.push(fruit);
   };
 
   return (
@@ -102,19 +98,18 @@ function ResultsScreen({route, navigation}) {
       {/* Flatlist of results */}
       <View style={Styles.resultsContainer}>
         <FlatList
-          data={results}
+          data={resultz}
           renderItem={({item}) => (
             <Tile
               featured
               containerStyle={Styles.resultsItem}
-              title={item.key}
+              title={item.title}
               titleStyle={Styles.resultsItemText}
               imageContainerStyle={Styles.resultsItemImg}
-              imageSrc={{uri: item.image}}
+              imageSrc={{uri: item.imageUrl}}
               onPress={() =>
                 navigation.navigate('Details', {
-                  name: item.key,
-                  uri: item.image,
+                  fruit: item,
                 })
               }
             />
