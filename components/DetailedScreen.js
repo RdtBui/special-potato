@@ -12,34 +12,30 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../Styles';
 
 function DetailedScreen({route, navigation}) {
-  const {name} = route.params;
-  const {uri} = route.params;
+  const {fruit} = route.params;
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
-      <View style={Styles.floatingContainer}>
+      <View style={{...Styles.headerFloatingContainer}}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="arrow-back" size={40} />}
+          icon={<Icon reverse name="arrow-back" size={30} />}
           onPress={() => navigation.goBack()}
         />
       </View>
       <ScrollView>
-        <Card title={name}>
+        <Card title={fruit.title}>
           <Image
             style={Styles.resultsItemImg}
             resizeMode="cover"
-            source={{uri: uri}}
+            source={{uri: fruit.imageUrl}}
           />
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </Text>
+          <Text>Description: {fruit.description}</Text>
+          <Text>Peak seasons are/is {fruit.peakSeason}</Text>
+          <Text>How to select ripe fruit: {fruit.selectInstructions}</Text>
+          <Text>How to eat: {fruit.eatInstructions}</Text>
+          <Text>Color is {fruit.color}</Text>
         </Card>
       </ScrollView>
     </SafeAreaView>

@@ -10,8 +10,8 @@ function SearchBarComponent(props) {
   return (
     <SearchBar
       searchIcon={{
-        size: 35,
-        backgroundColor: '#56C596',
+        size: 30,
+        backgroundColor: '#ffac81',
         height: 55,
         width: 55,
         justifyContent: 'center',
@@ -20,7 +20,7 @@ function SearchBarComponent(props) {
       leftIconContainerStyle={{
         transform: [{translateX: -8}],
       }}
-      inputStyle={{fontSize: 25}}
+      inputStyle={{fontSize: 20, textAlignVertical: 'center'}}
       inputContainerStyle={Styles.searchBarInput}
       containerStyle={Styles.searchBarContainer}
       placeholder="Search"

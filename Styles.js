@@ -23,6 +23,7 @@ export default StyleSheet.create({
   },
   // Search bar
   searchBarInput: {
+    height: 45,
     backgroundColor: Colors.white,
     borderRadius: 25,
     borderTopWidth: 3,
@@ -42,22 +43,23 @@ export default StyleSheet.create({
     margin: 0,
   },
 
-  floatingContainer: {
+  headerFloatingContainer: {
     justifyContent: 'flex-start',
-    backgroundColor: 'transparent',
+    alignItems: 'center',
+
     flexDirection: 'row',
     borderRadius: 0,
     borderWidth: 0,
     marginTop: 10,
   },
+
   floatingContainerBtn: {
     width: 60,
-    height: 50,
+    height: 45,
     margin: 12,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 0,
-    borderRadius: 25,
   },
   // Camera
   cameraView: {

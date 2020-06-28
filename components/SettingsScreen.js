@@ -19,11 +19,11 @@ function SettingsScreen({navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'flex-start'}}>
-      <View style={Styles.floatingContainer}>
+      <View style={Styles.headerFloatingContainer}>
         <Button
           type="outline"
           buttonStyle={Styles.floatingContainerBtn}
-          icon={<Icon reverse name="arrow-back" size={40} />}
+          icon={<Icon reverse name="arrow-back" size={30} />}
           onPress={() => navigation.navigate('Home')}
         />
         <Text h4 style={{textAlignVertical: 'center'}}>

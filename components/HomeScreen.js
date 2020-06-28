@@ -6,8 +6,6 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Text, Card} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
-import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
@@ -19,8 +17,10 @@ import Styles from '../Styles';
 // Import components
 import AboutScreen from './AboutScreen';
 import SettingsScreen from './SettingsScreen';
-import ItemScanner from './ItemScanner';
 import SearchBarComponent from './SearchBarComponent';
+import FavoriteScreen from './FavoriteScreen';
+
+import ItemScanner from './ItemScanner';
 
 function CameraScreen({navigation}) {
   const [resultsReturned, setResultsReturned] = useState([]);
@@ -33,7 +33,10 @@ function CameraScreen({navigation}) {
   // useEffect ensures that navigation to ResultsScreen happens only after the results returned from ItemScanner and are defined
   useEffect(() => {
     if (resultsReturned !== undefined) {
-      navigation.push('Results', {resultz: resultsReturned});
+      navigation.push('Results', {
+        // Sends only a simple array of the resulting labels to ResultsScreen
+        labels: resultsReturned.map(res => res['label']),
+      });
     }
   }, [resultsReturned]);
 
@@ -42,13 +45,23 @@ function CameraScreen({navigation}) {
       {/* Main view */}
       <ItemScanner onReturn={returnResultsHandler} />
       {/* Top Header */}
-      <View style={{position: 'absolute', ...Styles.floatingContainer}}>
+      <View
+        style={{
+          position: 'absolute',
+          ...Styles.headerFloatingContainer,
+        }}>
         {/* Top Header Menu Button */}
         <Button
           type="outline"
-          buttonStyle={Styles.floatingContainerBtn}
+          buttonStyle={{
+            ...Styles.floatingContainerBtn,
+            borderWidth: 3,
+            borderColor: 'black',
+            borderRadius: 20,
+            backgroundColor: '#cdeac0',
+          }}
           onPress={() => navigation.toggleDrawer()}
-          icon={<Icon reverse name="menu" size={40} />}
+          icon={<Icon reverse name="menu" size={30} />}
         />
         {/* Top Header Search Bar*/}
         <SearchBarComponent />
@@ -61,8 +74,9 @@ function HomeScreen() {
   return (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={CameraScreen} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
+      <Drawer.Screen name="Favorites" component={FavoriteScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 }
