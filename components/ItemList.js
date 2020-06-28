@@ -1,5 +1,5 @@
 /**
- * Results screen
+ * ItemList to display a FlatList component
  */
 
 // Basic react packages

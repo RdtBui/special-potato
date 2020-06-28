@@ -59,9 +59,6 @@ function ResultsScreen({route, navigation}) {
   const {labels} = route.params;
   const [results, setResults] = useState([]);
   let dm = new DataMapper();
-  // Displays results in the console from inside ResultsScreen
-  console.log('Results inside ResultScreen:');
-  labels.forEach(res => console.log(res));
 
   // When the results are received in ResultsScreen, the DataMapper will fetch the fruit informations from Firebase
   useEffect(() => {
@@ -74,10 +71,7 @@ function ResultsScreen({route, navigation}) {
   const fetchDataResults = async queryLabel => {
     // TODO: Replace hardcoded 'banana' with queryLabel and remove console logs once model is trained to recognize fruits
     // TODO: Make sure data is loaded completely before displaying FlatList
-    let fruit = await dm.getFruit('pear');
-    console.log('Querying for: ' + queryLabel);
-    console.log('Output:');
-    console.log('Fruit is ' + fruit.title);
+    let fruit = await dm.getFruit('banana');
     setResults(currentResults => [...currentResults, fruit]);
   };
 
