@@ -48,6 +48,7 @@ export default StyleSheet.create({
     borderWidth: 0,
     marginTop: 0,
     paddingRight: 12,
+    minHeight: 60
   },
 
   floatingContainerBtn: {
