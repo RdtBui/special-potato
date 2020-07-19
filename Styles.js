@@ -25,11 +25,7 @@ export default StyleSheet.create({
   searchBarInput: {
     height: 45,
     backgroundColor: Colors.white,
-    borderRadius: 25,
-    borderTopWidth: 3,
-    borderBottomWidth: 3,
-    borderRightWidth: 3,
-    borderLeftWidth: 3,
+    borderRadius: 0,
     borderColor: 'black',
     overflow: 'hidden',
   },
@@ -46,17 +42,18 @@ export default StyleSheet.create({
   headerFloatingContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-
+    backgroundColor: Colors.white,
     flexDirection: 'row',
     borderRadius: 0,
     borderWidth: 0,
-    marginTop: 10,
+    marginTop: 0,
+    paddingRight: 12,
   },
 
   floatingContainerBtn: {
     width: 60,
-    height: 45,
-    margin: 12,
+    height: 40,
+    margin: 0,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 0,

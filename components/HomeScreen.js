@@ -55,16 +55,19 @@ function CameraScreen({navigation}) {
           type="outline"
           buttonStyle={{
             ...Styles.floatingContainerBtn,
-            borderWidth: 3,
+            borderWidth: 0,
             borderColor: 'black',
-            borderRadius: 20,
-            backgroundColor: '#cdeac0',
+            borderRadius: 0,
           }}
           onPress={() => navigation.toggleDrawer()}
           icon={<Icon reverse name="menu" size={30} />}
         />
         {/* Top Header Search Bar*/}
         <SearchBarComponent />
+        <Icon
+         name='search'
+         size={30}
+         />
       </View>
     </SafeAreaView>
   );
