@@ -3,6 +3,15 @@ import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default StyleSheet.create({
+  // Detailed Page
+  detailedCard: {
+    borderRadius: 25,
+    padding: 0,
+    overflow: 'hidden',
+  },
+  cardContent: {
+    padding: 25,
+  },
   // Results Page
   resultsContainer: {
     flex: 1,
@@ -74,7 +83,15 @@ export default StyleSheet.create({
     height: 80,
     width: 80,
   },
+  // About
+  aboutCard: {
+    borderRadius: 25,
+  },
   // Other
+  headerTitle: {
+    textAlignVertical: 'center',
+    fontWeight: 'normal',
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
