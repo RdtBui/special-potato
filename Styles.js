@@ -3,6 +3,15 @@ import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default StyleSheet.create({
+  // Detailed Page
+  detailedCard: {
+    borderRadius: 25,
+    padding: 0,
+    overflow: 'hidden',
+  },
+  cardContent: {
+    padding: 25,
+  },
   // Results Page
   resultsContainer: {
     flex: 1,
@@ -25,11 +34,7 @@ export default StyleSheet.create({
   searchBarInput: {
     height: 45,
     backgroundColor: Colors.white,
-    borderRadius: 25,
-    borderTopWidth: 3,
-    borderBottomWidth: 3,
-    borderRightWidth: 3,
-    borderLeftWidth: 3,
+    borderRadius: 0,
     borderColor: 'black',
     overflow: 'hidden',
   },
@@ -46,17 +51,19 @@ export default StyleSheet.create({
   headerFloatingContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-
+    backgroundColor: Colors.white,
     flexDirection: 'row',
     borderRadius: 0,
     borderWidth: 0,
-    marginTop: 10,
+    marginTop: 0,
+    paddingRight: 12,
+    minHeight: 60
   },
 
   floatingContainerBtn: {
     width: 60,
-    height: 45,
-    margin: 12,
+    height: 40,
+    margin: 0,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 0,
@@ -76,7 +83,15 @@ export default StyleSheet.create({
     height: 80,
     width: 80,
   },
+  // About
+  aboutCard: {
+    borderRadius: 25,
+  },
   // Other
+  headerTitle: {
+    textAlignVertical: 'center',
+    fontWeight: 'normal',
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },

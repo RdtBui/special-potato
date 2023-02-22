@@ -11,6 +11,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../Styles';
 
+import Markdown from 'react-native-markdown-display';
+
 function DetailedScreen({route, navigation}) {
   const {fruit} = route.params;
 
@@ -23,19 +25,20 @@ function DetailedScreen({route, navigation}) {
           icon={<Icon reverse name="arrow-back" size={30} />}
           onPress={() => navigation.goBack()}
         />
+        <Text h4 h4Style={Styles.headerTitle}>
+          {fruit.title}
+        </Text>
       </View>
       <ScrollView>
-        <Card title={fruit.title}>
+        <Card containerStyle={Styles.detailedCard}>
           <Image
             style={Styles.resultsItemImg}
             resizeMode="cover"
             source={{uri: fruit.imageUrl}}
           />
-          <Text>Description: {fruit.description}</Text>
-          <Text>Peak seasons are/is {fruit.peakSeason}</Text>
-          <Text>How to select ripe fruit: {fruit.selectInstructions}</Text>
-          <Text>How to eat: {fruit.eatInstructions}</Text>
-          <Text>Color is {fruit.color}</Text>
+          <View style={Styles.cardContent}>
+            <Markdown>{fruit.description}</Markdown>
+          </View>
         </Card>
       </ScrollView>
     </SafeAreaView>

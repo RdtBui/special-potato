@@ -26,7 +26,7 @@ function SettingsScreen({navigation}) {
           icon={<Icon reverse name="arrow-back" size={30} />}
           onPress={() => navigation.navigate('Home')}
         />
-        <Text h4 style={{textAlignVertical: 'center'}}>
+        <Text h4 h4Style={Styles.headerTitle}>
           Settings
         </Text>
       </View>

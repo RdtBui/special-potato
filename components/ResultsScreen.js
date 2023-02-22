@@ -88,6 +88,10 @@ function ResultsScreen({route, navigation}) {
         />
         {/* Top Header Search Bar*/}
         <SearchBarComponent />
+        <Icon
+         name='search'
+         size={30}
+         />
       </View>
       {/* Flatlist of results */}
       <ItemList listData={results} navigation={navigation} />
